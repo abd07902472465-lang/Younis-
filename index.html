@@ -1,0 +1,1455 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Lord of the Flies Quiz</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400&family=IM+Fell+English:ital@0;1&display=swap">
+<style>
+/* Layout: one pocket-width column (max 640px). Home is a night-time title band lit by rising embers above a stack of quiz sets; a quiz shows one question card at a time with a thumb-reach action bar. */
+:root {
+  --bg: #EBF0EC;
+  --surface: #FFFFFF;
+  --surface-2: #DCE5DF;
+  --ink: #12241C;
+  --muted: #4D6056;
+  --line: #C4D2C9;
+  --ember: #C2410C;
+  --on-ember: #FFFFFF;
+  --ember-soft: #FCE5D7;
+  --ember-glow: #F97316;
+  --glow: rgb(249 115 22 / .34);
+  --conch: #B23F5C;
+  --conch-soft: #F9DFE5;
+  --lagoon: #126865;
+  --lagoon-soft: #D3ECE8;
+  --good: #1A7342;
+  --on-good: #FFFFFF;
+  --good-soft: #DBF0E2;
+  --bad: #B42318;
+  --on-bad: #FFFFFF;
+  --bad-soft: #FBE1DD;
+  --night: #0F1D17;
+  --night-ink: #EFF5F0;
+  --night-muted: #A8BBB0;
+  --night-line: #2A4035;
+  --veil: rgb(235 240 236 / .9);
+  --shadow: 0 1px 2px rgb(18 36 28 / .06), 0 12px 28px -8px rgb(18 36 28 / .16);
+  --font-display: "IM Fell English", "Iowan Old Style", "Palatino Linotype", Palatino, Georgia, serif;
+  --font-body: "Atkinson Hyperlegible", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #0C1712; --surface: #13221B; --surface-2: #1B2E25; --ink: #E6EEE8; --muted: #9FB3A8; --line: #294035;
+    --ember: #FF8048; --on-ember: #1E0C04; --ember-soft: #3A1E12; --ember-glow: #FF8A4C; --glow: rgb(255 128 72 / .3);
+    --conch: #F49AAF; --conch-soft: #3A1E27; --lagoon: #5CC6BF; --lagoon-soft: #12322F;
+    --good: #55C98A; --on-good: #06190E; --good-soft: #123222; --bad: #FF8273; --on-bad: #230705; --bad-soft: #3A1916;
+    --night: #08110D; --night-ink: #EFF5F0; --night-muted: #A3B6AB; --night-line: #22362C;
+    --veil: rgb(12 23 18 / .88);
+    --shadow: 0 1px 2px rgb(0 0 0 / .4), 0 12px 28px -8px rgb(0 0 0 / .5);
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #0C1712; --surface: #13221B; --surface-2: #1B2E25; --ink: #E6EEE8; --muted: #9FB3A8; --line: #294035;
+  --ember: #FF8048; --on-ember: #1E0C04; --ember-soft: #3A1E12; --ember-glow: #FF8A4C; --glow: rgb(255 128 72 / .3);
+  --conch: #F49AAF; --conch-soft: #3A1E27; --lagoon: #5CC6BF; --lagoon-soft: #12322F;
+  --good: #55C98A; --on-good: #06190E; --good-soft: #123222; --bad: #FF8273; --on-bad: #230705; --bad-soft: #3A1916;
+  --night: #08110D; --night-ink: #EFF5F0; --night-muted: #A3B6AB; --night-line: #22362C;
+  --veil: rgb(12 23 18 / .88);
+  --shadow: 0 1px 2px rgb(0 0 0 / .4), 0 12px 28px -8px rgb(0 0 0 / .5);
+  color-scheme: dark;
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+html, body { margin: 0; }
+[hidden] { display: none !important; }
+img { max-width: 100%; }
+html { -webkit-text-size-adjust: 100%; text-size-adjust: 100%; }
+body {
+  background: var(--bg);
+  color: var(--ink);
+  font-family: var(--font-body);
+  font-size: 1.0625rem;
+  line-height: 1.5;
+  -webkit-tap-highlight-color: transparent;
+}
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0 0 auto;
+  height: env(safe-area-inset-top, 0px);
+  z-index: 40;
+  background: var(--bg);
+}
+body[data-view="home"]::before { background: var(--night); }
+h1, h2, h3, p { margin: 0; }
+button { font: inherit; color: inherit; -webkit-appearance: none; appearance: none; }
+svg { display: block; }
+:focus-visible { outline: 3px solid var(--ember); outline-offset: 2px; }
+.wrap {
+  width: 100%;
+  max-width: 640px;
+  margin-inline: auto;
+  padding-left: max(16px, env(safe-area-inset-left, 0px));
+  padding-right: max(16px, env(safe-area-inset-right, 0px));
+}
+.sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+
+/* ---------- Home ---------- */
+.hero {
+  position: relative;
+  overflow: hidden;
+  background: var(--night);
+  color: var(--night-ink);
+  border-bottom: 1px solid var(--night-line);
+}
+.hero::after {
+  content: "";
+  position: absolute;
+  left: -10%;
+  right: -10%;
+  bottom: -45%;
+  height: 95%;
+  background: radial-gradient(closest-side, var(--glow), transparent);
+  pointer-events: none;
+  z-index: 0;
+}
+.embers { position: absolute; inset: 0; width: 100%; height: 100%; z-index: 1; pointer-events: none; }
+.hero-inner { position: relative; z-index: 2; padding-block: 52px 36px; display: grid; gap: 14px; }
+.eyebrow {
+  font-size: .75rem;
+  font-weight: 700;
+  letter-spacing: .16em;
+  text-transform: uppercase;
+  color: var(--ember-glow);
+}
+.hero-title {
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-size: clamp(3.1rem, 15vw, 5.4rem);
+  line-height: .92;
+  letter-spacing: -.01em;
+  text-wrap: balance;
+}
+.hero-title em {
+  font-style: italic;
+  font-size: .5em;
+  color: var(--night-muted);
+  letter-spacing: 0;
+  vertical-align: .38em;
+  margin-inline: .04em;
+}
+.lead { max-width: 36ch; color: var(--night-muted); }
+.hero-stats {
+  list-style: none;
+  margin: 4px 0 0;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px 20px;
+  font-size: .9rem;
+  color: var(--night-muted);
+}
+.hero-stats strong {
+  color: var(--night-ink);
+  font-size: 1.2rem;
+  font-variant-numeric: tabular-nums;
+  margin-right: 4px;
+}
+.hero-inner > * { animation: rise .6s cubic-bezier(.2, .8, .2, 1) backwards; animation-delay: calc(var(--i, 0) * 70ms); }
+
+.home-main { padding-block: 28px 44px; display: grid; gap: 16px; }
+.section-label {
+  font-size: .75rem;
+  font-weight: 700;
+  letter-spacing: .16em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+.set-list { display: grid; gap: 12px; }
+.set {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  width: 100%;
+  padding: 16px;
+  text-align: left;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  cursor: pointer;
+  touch-action: manipulation;
+  transition: border-color .2s, box-shadow .2s, transform .12s;
+  animation: rise .5s cubic-bezier(.2, .8, .2, 1) backwards;
+  animation-delay: calc(120ms + var(--i, 0) * 60ms);
+}
+@media (hover: hover) { .set:hover { border-color: var(--ember); box-shadow: var(--shadow); } }
+.set:active { transform: scale(.985); }
+.set-mixed { background: transparent; border-style: dashed; }
+.set-icon {
+  flex: none;
+  width: 46px;
+  height: 46px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+}
+.set-icon svg { width: 24px; height: 24px; }
+.tone-ember .set-icon { background: var(--ember-soft); color: var(--ember); }
+.tone-lagoon .set-icon { background: var(--lagoon-soft); color: var(--lagoon); }
+.tone-conch .set-icon { background: var(--conch-soft); color: var(--conch); }
+.tone-ink .set-icon { background: var(--surface-2); color: var(--ink); }
+.set-body { flex: 1 1 auto; min-width: 0; display: grid; gap: 2px; }
+.set-title { font-family: var(--font-display); font-size: 1.55rem; line-height: 1.1; }
+.set-sub { color: var(--muted); font-size: .95rem; line-height: 1.3; }
+.set-meta { color: var(--muted); font-size: .8rem; margin-top: 4px; }
+.set-side { flex: none; display: grid; justify-items: end; gap: 4px; text-align: right; }
+.set-count { font-size: 1.6rem; font-weight: 700; line-height: 1; font-variant-numeric: tabular-nums; }
+.set-count-label { font-size: .68rem; letter-spacing: .12em; text-transform: uppercase; color: var(--muted); }
+.best {
+  margin-top: 4px;
+  padding: 3px 8px;
+  border-radius: 999px;
+  background: var(--good-soft);
+  color: var(--good);
+  font-size: .75rem;
+  font-weight: 700;
+  white-space: nowrap;
+}
+.footnote { font-size: .875rem; color: var(--muted); max-width: 60ch; }
+
+/* ---------- Quiz ---------- */
+.quiz-top {
+  position: sticky;
+  top: env(safe-area-inset-top, 0px);
+  z-index: 30;
+  background: var(--veil);
+  -webkit-backdrop-filter: blur(12px);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--line);
+}
+.quiz-top-inner {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 10px;
+  padding-block: 8px;
+}
+.btn-exit {
+  display: inline-flex;
+  align-items: center;
+  gap: 2px;
+  min-height: 44px;
+  padding: 0 12px 0 6px;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  background: var(--surface);
+  font-weight: 700;
+  font-size: .9rem;
+  cursor: pointer;
+  touch-action: manipulation;
+  transition: background-color .2s, color .2s, border-color .2s;
+}
+.btn-exit svg { width: 20px; height: 20px; }
+.btn-exit.armed { background: var(--bad); border-color: var(--bad); color: var(--on-bad); }
+.quiz-title {
+  font-family: var(--font-display);
+  font-size: 1.3rem;
+  text-align: center;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.score-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  min-height: 44px;
+  padding: 0 5px;
+  border-radius: 999px;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+}
+.score-pill .score, .score-pill .streak {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 5px 9px;
+  border-radius: 999px;
+}
+.score-pill .score svg { width: 16px; height: 16px; color: var(--good); }
+.streak { background: var(--ember-soft); color: var(--ember); }
+.streak svg { width: 15px; height: 15px; transform-origin: 50% 85%; animation: flicker 1s ease-in-out infinite; }
+.progress { height: 5px; background: var(--surface-2); }
+.progress-fill {
+  height: 100%;
+  width: 0;
+  background: linear-gradient(90deg, var(--ember), var(--ember-glow));
+  box-shadow: 0 0 10px var(--glow);
+  border-radius: 0 4px 4px 0;
+  transition: width .5s cubic-bezier(.2, .8, .2, 1);
+}
+
+.quiz-main { padding-block: 18px calc(116px + env(safe-area-inset-bottom, 0px)); }
+.qcard {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  box-shadow: var(--shadow);
+  padding: 18px;
+}
+.qmeta { display: flex; justify-content: space-between; align-items: baseline; gap: 12px; margin-bottom: 12px; }
+.qtype { font-size: .72rem; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; color: var(--ember); }
+.qnum { font-size: .85rem; color: var(--muted); font-variant-numeric: tabular-nums; white-space: nowrap; }
+.qfrom { font-size: .85rem; color: var(--muted); margin: -6px 0 10px; }
+.qtext { font-size: clamp(1.2rem, 4.8vw, 1.45rem); line-height: 1.3; font-weight: 700; text-wrap: balance; margin-bottom: 16px; }
+
+.opts { display: grid; gap: 10px; }
+.opt {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  width: 100%;
+  min-height: 56px;
+  padding: 10px 14px 10px 10px;
+  text-align: left;
+  line-height: 1.35;
+  background: var(--bg);
+  border: 2px solid var(--line);
+  border-radius: 12px;
+  cursor: pointer;
+  touch-action: manipulation;
+  transition: background-color .2s, border-color .2s, opacity .3s, transform .12s;
+}
+@media (hover: hover) { .opt:not([aria-disabled]):hover { border-color: var(--ember); } }
+.opt:not([aria-disabled]):active { transform: scale(.985); }
+.opt[aria-disabled] { cursor: default; }
+.opt-key {
+  flex: none;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  font-weight: 700;
+  font-size: .95rem;
+  transition: background-color .2s, color .2s, border-color .2s;
+}
+.opt-key svg { width: 18px; height: 18px; }
+.opt-text { min-width: 0; }
+.opts-tf { grid-template-columns: 1fr 1fr; }
+.opts-tf .opt {
+  flex-direction: column;
+  justify-content: center;
+  text-align: center;
+  min-height: 108px;
+  padding: 14px;
+  gap: 8px;
+  font-weight: 700;
+  font-size: 1.15rem;
+}
+.opts-tf .opt-key { width: 44px; height: 44px; }
+.opts-tf .opt-key svg { width: 22px; height: 22px; }
+.opts-tf .opt:first-child .opt-key { color: var(--good); }
+.opts-tf .opt:last-child .opt-key { color: var(--bad); }
+.opts .opt.is-correct { background: var(--good-soft); border-color: var(--good); }
+.opts .opt.is-correct .opt-key { background: var(--good); border-color: var(--good); color: var(--on-good); }
+.opts .opt.is-wrong { background: var(--bad-soft); border-color: var(--bad); }
+.opts .opt.is-wrong .opt-key { background: var(--bad); border-color: var(--bad); color: var(--on-bad); }
+.opts .opt.is-dim { opacity: .45; }
+
+.feedback {
+  margin-top: 14px;
+  padding: 14px 16px;
+  border-radius: 12px;
+  display: grid;
+  gap: 6px;
+  scroll-margin-top: 90px;
+  scroll-margin-bottom: calc(124px + env(safe-area-inset-bottom, 0px));
+}
+.feedback.good { background: var(--good-soft); }
+.feedback.bad { background: var(--bad-soft); }
+.feedback.neutral { background: var(--surface-2); }
+.feedback-title { display: flex; align-items: center; gap: 8px; font-weight: 700; font-size: 1.05rem; }
+.feedback.good .feedback-title { color: var(--good); }
+.feedback.bad .feedback-title { color: var(--bad); }
+.fb-icon svg { width: 20px; height: 20px; }
+
+.flip {
+  display: block;
+  width: 100%;
+  padding: 0;
+  border: 0;
+  background: none;
+  text-align: left;
+  cursor: pointer;
+  perspective: 1400px;
+  border-radius: 12px;
+  touch-action: manipulation;
+}
+.flip-inner {
+  display: grid;
+  transform-style: preserve-3d;
+  transition: transform .7s cubic-bezier(.3, .7, .2, 1);
+}
+.flip.is-flipped .flip-inner { transform: rotateY(180deg); }
+.face {
+  grid-area: 1 / 1;
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+  border-radius: 12px;
+  padding: 22px 18px;
+  min-height: 210px;
+  display: grid;
+  align-content: center;
+  gap: 12px;
+}
+.face-front { background: var(--night); color: var(--night-ink); transform: rotateY(0deg); }
+.face-back { background: var(--ember-soft); color: var(--ink); border: 2px solid var(--ember); transform: rotateY(180deg); }
+.face-q { display: block; font-size: clamp(1.2rem, 4.8vw, 1.45rem); line-height: 1.3; font-weight: 700; text-wrap: balance; }
+.face-hint { display: inline-flex; align-items: center; gap: 8px; font-size: .9rem; color: var(--night-muted); }
+.face-hint svg { width: 18px; height: 18px; flex: none; }
+.face-label { display: block; font-size: .72rem; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; color: var(--ember); }
+.face-a { display: block; font-size: 1.15rem; line-height: 1.45; }
+.face-small { display: block; font-size: .85rem; color: var(--muted); }
+
+.actionbar {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 30;
+  background: var(--veil);
+  -webkit-backdrop-filter: blur(12px);
+  backdrop-filter: blur(12px);
+  border-top: 1px solid var(--line);
+  padding-bottom: env(safe-area-inset-bottom, 0px);
+}
+.actionbar-inner { display: flex; gap: 10px; padding-block: 12px; }
+.btn {
+  flex: 1 1 0;
+  min-width: 0;
+  min-height: 52px;
+  padding: 0 16px;
+  border-radius: 12px;
+  border: 1px solid transparent;
+  font-weight: 700;
+  font-size: 1.05rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  cursor: pointer;
+  touch-action: manipulation;
+  transition: background-color .2s, color .2s, transform .12s;
+}
+.btn:active { transform: scale(.98); }
+.btn-icon svg { width: 20px; height: 20px; }
+.btn-primary { background: var(--ember); color: var(--on-ember); }
+.btn-primary[aria-disabled="true"] { background: var(--surface-2); color: var(--muted); cursor: default; transform: none; }
+.btn-secondary { background: var(--surface); color: var(--ink); border-color: var(--line); }
+.btn-good { background: var(--good); color: var(--on-good); }
+
+/* ---------- Results ---------- */
+.results { padding-block: 28px 48px; display: grid; gap: 30px; }
+.res-head { display: grid; justify-items: center; text-align: center; gap: 12px; }
+.res-kicker { font-size: .75rem; font-weight: 700; letter-spacing: .16em; text-transform: uppercase; color: var(--ember); }
+.ring-wrap { position: relative; width: min(220px, 62vw); max-width: 100%; aspect-ratio: 1; }
+.ring { width: 100%; height: 100%; }
+.ring-track { fill: none; stroke: var(--surface-2); stroke-width: 10; }
+.ring-fill { fill: none; stroke: var(--ember); stroke-width: 10; stroke-linecap: round; transition: stroke-dashoffset 1.3s cubic-bezier(.2, .8, .2, 1); }
+.ring-center { position: absolute; inset: 0; display: grid; place-content: center; justify-items: center; }
+.ring-pct { font-family: var(--font-display); font-size: clamp(3rem, 13vw, 4rem); line-height: 1; font-variant-numeric: tabular-nums; }
+.ring-pct small { font-size: .45em; }
+.ring-label { font-size: .75rem; color: var(--muted); letter-spacing: .14em; text-transform: uppercase; }
+.res-score { font-weight: 700; font-size: 1.15rem; font-variant-numeric: tabular-nums; }
+.res-msg { color: var(--muted); max-width: 34ch; text-wrap: balance; }
+.res-chips { display: flex; flex-wrap: wrap; justify-content: center; gap: 8px; }
+.tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 12px;
+  border-radius: 999px;
+  font-size: .85rem;
+  font-weight: 700;
+  background: var(--surface);
+  border: 1px solid var(--line);
+}
+.tag svg { width: 15px; height: 15px; }
+.tag-best { background: var(--good-soft); border-color: transparent; color: var(--good); }
+.tag-streak { background: var(--ember-soft); border-color: transparent; color: var(--ember); }
+.res-actions { display: flex; gap: 10px; width: 100%; max-width: 440px; margin-top: 6px; }
+
+.review-wrap { display: grid; gap: 14px; }
+.review-head { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 10px; }
+.review-title { font-family: var(--font-display); font-size: 1.7rem; font-weight: 400; }
+.chips { display: flex; gap: 8px; }
+.chip {
+  min-height: 40px;
+  padding: 0 14px;
+  border-radius: 999px;
+  border: 1px solid var(--line);
+  background: var(--surface);
+  font-weight: 700;
+  font-size: .9rem;
+  cursor: pointer;
+  touch-action: manipulation;
+  font-variant-numeric: tabular-nums;
+}
+.chip[aria-pressed="true"] { background: var(--ink); color: var(--bg); border-color: var(--ink); }
+.review { display: grid; gap: 10px; }
+.rv {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  padding: 14px 16px;
+  display: grid;
+  gap: 10px;
+}
+.rv-head { display: grid; grid-template-columns: 26px minmax(0, 1fr); gap: 10px; align-items: start; }
+.rv-mark { width: 26px; height: 26px; border-radius: 50%; display: grid; place-items: center; }
+.rv-mark svg { width: 15px; height: 15px; }
+.rv.ok .rv-mark { background: var(--good-soft); color: var(--good); }
+.rv.miss .rv-mark { background: var(--bad-soft); color: var(--bad); }
+.rv-q { font-weight: 700; line-height: 1.35; }
+.rv-n { color: var(--muted); font-variant-numeric: tabular-nums; }
+.rv-body { display: grid; gap: 6px; padding-left: 36px; font-size: .95rem; }
+.rv-line { display: grid; grid-template-columns: 7.2em minmax(0, 1fr); gap: 8px; }
+.rv-label { color: var(--muted); font-size: .75rem; text-transform: uppercase; letter-spacing: .08em; padding-top: .2em; }
+.rv-val.wrong { color: var(--bad); }
+.rv-val.right { color: var(--good); font-weight: 700; }
+.rv-why { color: var(--muted); font-size: .9rem; }
+.empty { color: var(--muted); }
+@media (max-width: 380px) {
+  .rv-line { grid-template-columns: 1fr; gap: 0; }
+  .rv-body { padding-left: 0; }
+}
+
+/* ---------- Effects ---------- */
+#fx { position: fixed; inset: 0; pointer-events: none; z-index: 60; overflow: hidden; }
+.spark {
+  position: absolute;
+  width: 7px;
+  height: 7px;
+  margin: -3.5px 0 0 -3.5px;
+  border-radius: 50%;
+  background: var(--ember-glow);
+  box-shadow: 0 0 10px 2px var(--glow);
+}
+.spark.alt { background: var(--good); }
+@keyframes rise { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: none; } }
+@keyframes flicker { 0%, 100% { transform: scale(1) rotate(-3deg); } 50% { transform: scale(1.15) rotate(3deg); } }
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: .01ms !important;
+    animation-delay: 0s !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: .01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+</style>
+</head>
+<body>
+
+<div id="app">
+  <section id="view-home" class="view">
+    <header class="hero">
+      <canvas class="embers" aria-hidden="true"></canvas>
+      <div class="wrap hero-inner">
+        <p class="eyebrow" style="--i:0">William Golding · 1954</p>
+        <h1 class="hero-title" style="--i:1">Lord <em>of the</em> Flies</h1>
+        <p class="lead" style="--i:2">Revision quizzes for the novel. Answer one question at a time and see why each answer is right.</p>
+        <ul class="hero-stats" style="--i:3">
+          <li><strong id="stat-questions">89</strong>questions</li>
+          <li><strong id="stat-sets">5</strong>quizzes</li>
+        </ul>
+      </div>
+    </header>
+    <main class="wrap home-main">
+      <h2 class="section-label">Choose a quiz</h2>
+      <div class="set-list" id="set-list"></div>
+      <p class="footnote">Chapter 2, Characters and Symbols follow the class homework sheets. The Whole Novel set adds new questions from the crash to the rescue.</p>
+    </main>
+  </section>
+
+  <section id="view-quiz" class="view" hidden>
+    <div class="quiz-top">
+      <div class="wrap quiz-top-inner">
+        <button type="button" class="btn-exit" id="btn-exit">
+          <svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 5l-7 7 7 7"/></svg>
+          <span id="exit-label">Exit</span>
+        </button>
+        <p class="quiz-title" id="quiz-title">Quiz</p>
+        <div class="score-pill" id="score-pill">
+          <span class="streak" id="streak" hidden>
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12.6 2.2c.3 2.6 1.6 4.1 3 5.6 1.5 1.6 3.1 3.3 3.1 6.4A6.7 6.7 0 0 1 12 21a6.7 6.7 0 0 1-6.7-6.8c0-2.5 1.1-4.2 2.6-5.6.1 1.6.8 2.8 2 3.4-.3-3.6 1-7.2 2.7-9.8z"/></svg>
+            <span id="streak-num">0</span><span class="sr"> in a row</span>
+          </span>
+          <span class="score">
+            <svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12.5 4.5 4.5L19 7.5"/></svg>
+            <span id="score-num">0</span><span class="sr"> correct</span>
+          </span>
+        </div>
+      </div>
+      <div class="progress" id="progress" role="progressbar" aria-label="Quiz progress" aria-valuemin="0" aria-valuemax="1" aria-valuenow="0">
+        <div class="progress-fill" id="progress-fill"></div>
+      </div>
+    </div>
+    <main class="wrap quiz-main">
+      <article class="qcard" id="qcard"></article>
+    </main>
+    <div class="actionbar">
+      <div class="wrap actionbar-inner" id="actionbar-inner"></div>
+    </div>
+  </section>
+
+  <section id="view-results" class="view" hidden>
+    <main class="wrap results">
+      <div class="res-head">
+        <p class="res-kicker" id="res-set">Quiz</p>
+        <div class="ring-wrap">
+          <svg class="ring" viewBox="0 0 120 120" aria-hidden="true">
+            <circle class="ring-track" cx="60" cy="60" r="52"/>
+            <circle class="ring-fill" id="ring-fill" cx="60" cy="60" r="52" transform="rotate(-90 60 60)"/>
+          </svg>
+          <div class="ring-center">
+            <span class="ring-pct"><span id="ring-num">0</span><small>%</small></span>
+            <span class="ring-label">Score</span>
+          </div>
+        </div>
+        <p class="res-score" id="res-score"></p>
+        <p class="res-msg" id="res-msg"></p>
+        <div class="res-chips" id="res-chips"></div>
+        <div class="res-actions">
+          <button type="button" class="btn btn-secondary" id="btn-home">All quizzes</button>
+          <button type="button" class="btn btn-primary" id="btn-again">Try again</button>
+        </div>
+      </div>
+      <section class="review-wrap" aria-labelledby="review-title">
+        <div class="review-head">
+          <h2 class="review-title" id="review-title">Your answers</h2>
+          <div class="chips" role="group" aria-label="Filter answers">
+            <button type="button" class="chip" id="chip-all" aria-pressed="true">All</button>
+            <button type="button" class="chip" id="chip-missed" aria-pressed="false">Missed</button>
+          </div>
+        </div>
+        <div class="review" id="review-list"></div>
+      </section>
+    </main>
+  </section>
+</div>
+<div id="fx" aria-hidden="true"></div>
+
+<script>
+(() => {
+  "use strict";
+
+  /* ---------------- Question bank ---------------- */
+  const SETS = [
+    {
+      id: "chapter-2", title: "Chapter 2", sub: "Fire on the Mountain", tone: "ember", icon: "flame",
+      qs: [
+        { t: "mc", q: "Who gets to speak at a meeting?", o: ["Whoever raises his hand", "Whoever steps forward into the circle", "Whoever Ralph picks to speak", "Whoever is holding the conch"], a: 3, e: "The boys agree that only the person holding the conch may speak." },
+        { t: "mc", q: "What frightening thing does the boy with a dark birthmark on his face say he saw at night?", o: ["An enemy warplane", "A ghost", "A beastie", "A nastie"], a: 2, e: "He tells the assembly he saw a “beastie”, a snake-like thing in the woods at night." },
+        { t: "mc", q: "What does Ralph say is the most important thing to do?", o: ["Keep a signal fire going so they can be rescued", "Hunt", "Keep a cooking fire going for food and warmth", "Make a full list of who is there"], a: 0, e: "Ralph wants smoke on the mountain so that a passing ship will see them." },
+        { t: "mc", q: "What do they use to light a fire?", o: ["A piece of glass that washed up on shore", "Flint", "Piggy’s glasses", "The sundial that Piggy makes"], a: 2, e: "The lenses of Piggy’s glasses focus sunlight onto dry wood." },
+        { t: "mc", q: "What happens to the boy with the mulberry birthmark when a whole patch of trees catches on fire?", o: ["He gets burned helping to put out the fire.", "He declares himself chief.", "He disappears and likely has died.", "He gets lost and cries until the older boys find him."], a: 2, e: "After the fire spreads, Piggy notices the boy is missing. He was probably killed in the fire." },
+        { t: "mc", q: "Who introduces the idea of a beast on the island?", o: ["Piggy", "Simon", "A little boy", "Roger"], a: 2, e: "A littlun, the boy with the birthmark, is the first to talk about a beast." },
+        { t: "mc", q: "What animal does Jack say they need an army to hunt for?", o: ["Mountain lions", "Wolves", "Pigs", "Bears"], a: 2, e: "Jack wants an army of hunters to go after the island’s wild pigs." },
+        { t: "mc", q: "How does Ralph start the fire?", o: ["With some salvaged jet fuel", "Rubbing two sticks together", "With the only dry match that he has", "With reflections from Piggy’s glasses"], a: 3, e: "Ralph moves Piggy’s lenses until they focus the sunlight on a piece of rotten wood." },
+        { t: "mc", q: "Why does Ralph want them all to build a huge fire?", o: ["To keep warm", "To cook a huge carcass", "To scare off predators", "To signal passing ships"], a: 3, e: "A big fire makes smoke that ships can see from far away." },
+        { t: "mc", q: "What does one of the younger boys say he saw that frightened him?", o: ["A “beastie”, perhaps a large snake", "A dead body in the jungle", "Bear tracks", "The remains of a fire and bones"], a: 0, e: "The littlun describes a snake-like beastie that came in the dark." },
+        { t: "mc", q: "What object determines who can speak, when that object is held?", o: ["A bear claw", "A flat rock", "A conch shell", "An engraved “speaking stick”"], a: 2, e: "Holding the conch gives a boy the right to speak at an assembly." },
+        { t: "open", q: "What does Ralph use to call the boys to the meeting?", r: "He blows the conch shell. Its loud note calls everyone to the platform." },
+        { t: "open", q: "What does the little boy with the mulberry-colored birthmark say about the beast?", r: "He says a snake-like “beastie” came in the dark and wanted to eat him. In the morning it seemed to turn into the creepers hanging in the trees." },
+        { t: "open", q: "Why is the signal fire important to the boys?", r: "It is their best hope of rescue. Smoke on the mountain could be seen by a passing ship." },
+        { t: "open", q: "What happens to the little boy with the birthmark?", r: "He goes missing after the fire spreads out of control. Nobody sees him again, so he probably died in the fire." },
+        { t: "open", q: "How do the boys start the fire?", r: "They use Piggy’s glasses to focus sunlight onto dry wood until it catches fire." }
+      ]
+    },
+    {
+      id: "characters", title: "Characters", sub: "Who’s who on the island", tone: "lagoon", icon: "people",
+      qs: [
+        { t: "mc", q: "What is Roger like?", o: ["Quiet, kind, and sensitive", "Prone to hysterics", "Particularly cruel and sadistic", "Unusually methodical and detail oriented"], a: 2, e: "Roger enjoys hurting others. Early on he throws stones near the littluns, and later he kills Piggy." },
+        { t: "mc", q: "What is “Samneric”?", o: ["An expression Piggy uses to describe sitting on a sandy log", "A large red boulder that the kids are impressed with", "The password that Jack’s tribe members call out when approaching their camp at night", "The nickname for the twin boys Sam and Eric"], a: 3, e: "Sam and Eric are twins who do everything together, so the boys join their names." },
+        { t: "mc", q: "What are Piggy’s chief characteristics?", o: ["Whiney, intelligent, innovative", "Strong and a good leader", "Spacey, difficult to understand, rude", "Eloquent, cagey, impressive"], a: 0, e: "Piggy complains a lot, but he is the cleverest boy and full of practical ideas." },
+        { t: "mc", q: "Which boy has a “civilizing instinct”?", o: ["Ralph", "Simon", "Piggy", "Jack"], a: 0, e: "Ralph keeps trying to hold meetings, build shelters and keep the fire going." },
+        { t: "mc", q: "What does Jack represent?", o: ["Order, civilization, productive leadership", "Spiritual goodness", "Savagery, violence, desire for power", "Childish curiosity and a sense of wonder"], a: 2, e: "Jack chooses hunting and power over rules and rescue." },
+        { t: "mc", q: "What does Simon represent?", o: ["Order, civilization, productive leadership", "Savagery, violence, desire for power", "Dissent and the rebellious spirit", "Spiritual goodness"], a: 3, e: "Simon is kind, helps the littluns and understands the truth about the beast." },
+        { t: "mc", q: "What does Ralph represent?", o: ["Spiritual goodness", "Order, civilization, productive leadership", "Savagery, violence, desire for power", "The innocence of childhood"], a: 1, e: "Ralph stands for rules, order and responsible leadership." },
+        { t: "mc", q: "What does Simon realize about the beast?", o: ["That it’s not a real beast; it’s the savagery within each person", "That it can be pacified by making sacrifices to it", "That it’s a real beast that comes in from the sea every night", "That it’s a curable form of madness"], a: 0, e: "Simon understands that the beast is the evil inside every person." },
+        { t: "mc", q: "What happens as Jack becomes more and more savage?", o: ["He starts to feel great remorse for his actions.", "He becomes better at controlling the other boys.", "He forgets how to speak in a human language.", "He loses the ability to control his tribe."], a: 1, e: "Jack uses fear of the beast, feasts and punishments to control his tribe more tightly." },
+        { t: "mc", q: "Who rescues the boys at the end of the novel?", o: ["A naval officer", "A police officer", "A military doctor", "An island hunter"], a: 0, e: "A British naval officer lands on the beach after his ship sees the smoke." },
+        { t: "mc", q: "Who are the Littluns?", o: ["The older hunters", "The younger boys", "The island soldiers", "The naval officers"], a: 1, e: "The littluns are the youngest boys on the island, around six years old." },
+        { t: "mc", q: "Who is one of Jack’s most violent followers?", o: ["Sam", "Eric", "Roger", "Piggy"], a: 2, e: "Roger is the boy who rolls the rock that kills Piggy." },
+        { t: "mc", q: "What does Simon’s death represent?", o: ["Loss of innocence", "Rise of civilization", "Victory of democracy", "Return of the adults"], a: 0, e: "The boys kill a gentle, innocent boy, which shows how far they have fallen." },
+        { t: "mc", q: "Who is the leader of the hunters?", o: ["Jack", "Ralph", "Piggy", "Simon"], a: 0, e: "Jack leads the hunters from the start, beginning with his choir." },
+        { t: "tf", q: "The naval officer rescues the boys at the end of the novel.", a: true, e: "A naval officer finds the boys on the beach." },
+        { t: "tf", q: "Sam and Eric are twin brothers.", a: true, e: "The twins are so close that the boys call them Samneric." },
+        { t: "tf", q: "Simon believes that the beast is only an external animal.", a: false, e: "Simon believes the beast is inside the boys themselves." },
+        { t: "tf", q: "Simon understands that the real beast exists within human beings.", a: true, e: "This is Simon’s key discovery about the beast." },
+        { t: "tf", q: "Roger represents cruelty and uncontrolled violence.", a: true, e: "Roger grows from throwing stones to killing Piggy." },
+        { t: "tf", q: "Piggy’s death symbolizes the rise of civilization.", a: false, e: "Piggy’s death marks the end of reason and order on the island." },
+        { t: "tf", q: "Jack represents savagery, violence, and the desire for power.", a: true, e: "Jack gives up rules for hunting, face paint and ruling by fear." },
+        { t: "tf", q: "Piggy represents intelligence, rationality, and civilization.", a: true, e: "Piggy is the voice of reason, science and common sense." },
+        { t: "tf", q: "Ralph’s main goal is to maintain the signal fire and seek rescue.", a: true, e: "Ralph keeps returning to the signal fire as the boys’ way home." },
+        { t: "tf", q: "Ralph represents savagery and uncontrolled violence.", a: false, e: "Ralph represents order and civilization. Jack represents savagery." }
+      ]
+    },
+    {
+      id: "symbols", title: "Symbols", sub: "The conch, the fire and the beast", tone: "conch", icon: "conch",
+      qs: [
+        { t: "mc", q: "What do Piggy’s glasses represent?", o: ["The power of the scientific and the rational", "Order and stability", "The potential energy of a system", "A longing for home and family"], a: 0, e: "Piggy’s glasses stand for science and reason. They are also the boys’ only way to make fire." },
+        { t: "mc", q: "What is the major symbol of order and civilization in the novel?", o: ["Hunting", "The conch", "The beach", "Piggy’s glasses"], a: 1, e: "The conch calls the assemblies and decides who may speak." },
+        { t: "mc", q: "The conch shell, when first introduced, immediately represents …", o: ["Democratic power", "Communication and order", "Natural beauty", "The boys’ connection to the adult world"], a: 1, e: "Its first job is to call the scattered boys together into an assembly. It grows into a sign of democratic power once only the holder may speak." },
+        { t: "mc", q: "What does the breaking of Piggy’s glasses symbolize?", o: ["The beginning of cooperation", "The final severing of Ralph and Jack’s friendship", "The total loss of all hope for rescue", "The triumph of savagery over intellect and reason"], a: 3, e: "When Jack breaks a lens, and later steals the glasses, violence wins over reason." },
+        { t: "mc", q: "What does the beast symbolize?", o: ["Fear", "Rescue", "Destruction", "Power"], a: 0, e: "The beast stands for the boys’ fear, and for the savage instinct inside them." },
+        { t: "mc", q: "What does the island symbolize?", o: ["A paradise or Garden of Eden", "A sanctuary for animals", "A landing strip for planes", "Savagery"], a: 0, e: "At first the island seems a perfect paradise, which the boys slowly ruin." },
+        { t: "mc", q: "What does the conch shell symbolize?", o: ["Fear and violence", "Civilization and order", "Savagery and power", "Death and corruption"], a: 1, e: "The conch is the main symbol of rules, order and democracy." },
+        { t: "mc", q: "What does the signal fire mainly symbolize?", o: ["Hope and rescue", "Fear and violence", "Power and control", "Savagery and death"], a: 0, e: "While the fire burns, the boys still hope to go home." },
+        { t: "mc", q: "What do masks and camouflage symbolize?", o: ["Loss of identity", "Growth of friendship", "Return to civilization", "Desire for rescue"], a: 0, e: "Behind a mask the boys stop being themselves and lose their sense of shame." },
+        { t: "mc", q: "What does face paint mainly symbolize?", o: ["Civilization and reason", "Intelligence and knowledge", "Descent into savagery", "Hope and rescue"], a: 2, e: "The more the boys paint their faces, the more savage they become." },
+        { t: "tf", q: "The conch shell symbolizes civilization, order, and democracy.", a: true, e: "Whoever holds the conch may speak, like a small parliament." },
+        { t: "tf", q: "The signal fire symbolizes hope and the possibility of rescue.", a: true, e: "The fire is the boys’ link to the outside world." },
+        { t: "tf", q: "Face paint helps the boys maintain their civilized identities.", a: false, e: "Face paint hides who they are and frees them to act savagely." },
+        { t: "tf", q: "The Lord of the Flies symbolizes goodness and innocence.", a: false, e: "The pig’s head stands for evil and the savage instinct inside people." },
+        { t: "tf", q: "Simon understands that the real beast is within the boys themselves.", a: true, e: "Simon sees that the beast is part of every person." },
+        { t: "tf", q: "Piggy’s glasses symbolize intelligence, reason, and scientific knowledge.", a: true, e: "The glasses link Piggy’s clear thinking to the power of science." },
+        { t: "tf", q: "Face paint symbolizes the boys’ descent into savagery.", a: true, e: "Painted faces mark the hunters’ move away from civilization." },
+        { t: "tf", q: "The boys use Piggy’s glasses to produce fire.", a: true, e: "The lenses focus sunlight to light the fire." },
+        { t: "tf", q: "The island can be viewed as a representation of human society.", a: true, e: "The island works like a small model of the wider world." },
+        { t: "tf", q: "The boys sometimes neglect the signal fire because they become focused on hunting.", a: true, e: "In Chapter 4 the fire goes out while the hunters chase a pig, and a ship passes by." }
+      ]
+    },
+    {
+      id: "novel", title: "The Whole Novel", sub: "Extra questions, from the crash to the rescue", tone: "ink", icon: "island",
+      qs: [
+        { t: "mc", q: "Who wrote Lord of the Flies?", o: ["George Orwell", "William Golding", "Aldous Huxley", "J. R. R. Tolkien"], a: 1, e: "William Golding published the novel in 1954. He won the Nobel Prize in Literature in 1983." },
+        { t: "mc", q: "How do the boys end up on the island?", o: ["Their ship sinks in a storm", "Their plane crashes while they are being evacuated during a war", "Their school sends them on a camping trip", "They get lost while sailing a small boat"], a: 1, e: "The boys were being flown away from a war when their plane came down on the island." },
+        { t: "mc", q: "What is the “scar” at the start of the novel?", o: ["A wound on Ralph’s face", "The path the crashed plane tore through the jungle", "A crack in the rocks at Castle Rock", "A mark left by Jack’s knife"], a: 1, e: "The scar is the long strip of broken jungle left by the crash." },
+        { t: "mc", q: "Who is elected chief at the first assembly?", o: ["Jack", "Piggy", "Ralph", "Simon"], a: 2, e: "The boys vote for Ralph, partly because he is the one holding the conch." },
+        { t: "mc", q: "Before the crash, Jack was the leader of which group?", o: ["A football team", "A school choir", "A scout troop", "A chess club"], a: 1, e: "Jack marches in at the head of the choir, and the choir becomes his hunters." },
+        { t: "mc", q: "What are Piggy’s physical problems?", o: ["He is deaf", "He has a broken arm", "He has asthma and poor eyesight", "He stutters badly"], a: 2, e: "Piggy is overweight, has asthma and can hardly see without his glasses." },
+        { t: "mc", q: "What is Piggy’s real name?", o: ["Peter", "Percival", "Philip", "It is never revealed"], a: 3, e: "Golding never tells us Piggy’s real name. Percival is one of the littluns." },
+        { t: "mc", q: "Why does the signal fire go out in Chapter 4?", o: ["A storm puts it out", "Piggy falls asleep beside it", "The boys guarding it join Jack’s hunt", "The littluns kick it over"], a: 2, e: "Sam and Eric leave the fire to hunt with Jack, and a ship passes without seeing any smoke." },
+        { t: "mc", q: "What do the hunters use to paint their faces?", o: ["Paint from the wrecked plane", "Crushed berries", "Red and white clay and charcoal", "Ink from their school bags"], a: 2, e: "Jack uses clay and charcoal as camouflage so the pigs will not see him." },
+        { t: "mc", q: "What is the “beast from the air” that Sam and Eric see on the mountain?", o: ["A giant bird", "A dead parachutist", "A wild boar", "The shadow of the fire"], a: 1, e: "It is the body of a dead pilot. His parachute moves in the wind, so he seems alive." },
+        { t: "mc", q: "What is the Lord of the Flies?", o: ["Jack’s nickname", "A pig’s head on a stick", "The conch shell", "The naval officer"], a: 1, e: "The hunters leave a sow’s head on a stick as a gift for the beast. Flies swarm around it." },
+        { t: "mc", q: "Who has a vision in which the Lord of the Flies seems to speak to him?", o: ["Ralph", "Simon", "Roger", "Piggy"], a: 1, e: "Alone in the forest, Simon imagines the pig’s head telling him the beast is part of the boys." },
+        { t: "mc", q: "How does Simon die?", o: ["He falls from a cliff", "He drowns in the lagoon", "The boys attack him during a wild dance in a storm", "He is caught in the forest fire"], a: 2, e: "Simon comes down from the mountain to tell the truth about the beast, and the frenzied boys mistake him for it." },
+        { t: "mc", q: "Where does Jack’s tribe make its camp?", o: ["On the beach", "At Castle Rock", "In Simon’s hidden glade", "On top of the mountain"], a: 1, e: "Castle Rock is a rocky fort at one end of the island." },
+        { t: "mc", q: "Why do Jack’s hunters raid Ralph’s camp at night?", o: ["To steal the conch", "To steal Piggy’s glasses", "To capture Ralph", "To steal food"], a: 1, e: "They need the glasses to make fire. They leave the conch behind." },
+        { t: "mc", q: "How does Piggy die?", o: ["Jack spears him", "He has a bad asthma attack", "Roger rolls a huge rock onto him", "He drowns while trying to swim"], a: 2, e: "Roger levers a boulder down from Castle Rock. It kills Piggy and smashes the conch." },
+        { t: "mc", q: "What finally brings a ship to the island?", o: ["Ralph’s signal fire", "A message in a bottle", "The fire Jack sets to hunt Ralph", "A plane that spots the conch"], a: 2, e: "Jack burns the forest to drive Ralph out, and the smoke draws a passing warship. Destruction, not hope, brings the rescue." },
+        { t: "mc", q: "Why does Ralph cry at the end of the novel?", o: ["He is afraid of the officer", "He grieves for lost innocence, human evil and his friend Piggy", "He wants to stay on the island", "He was badly burned by the fire"], a: 1, e: "Ralph finally understands the darkness the boys found in themselves." },
+        { t: "mc", q: "What is the main theme of the novel?", o: ["Friendship always wins", "Civilization versus savagery", "The fun of adventure", "Life at a boarding school"], a: 1, e: "Golding shows the struggle between our wish for order and our pull toward violence." },
+        { t: "tf", q: "William Golding wrote Lord of the Flies.", a: true, e: "It was his first novel, published in 1954." },
+        { t: "tf", q: "Piggy is elected chief at the first meeting.", a: false, e: "The boys elect Ralph. Most of them laugh at Piggy." },
+        { t: "tf", q: "Jack led a choir before the plane crash.", a: true, e: "His choir becomes the first group of hunters." },
+        { t: "tf", q: "The “beast” on the mountain is really a dead parachutist.", a: true, e: "Simon climbs the mountain and discovers the truth." },
+        { t: "tf", q: "Simon is killed by a boulder that Roger pushes.", a: false, e: "That is how Piggy dies. Simon is killed during the dance in the storm." },
+        { t: "tf", q: "The conch is smashed at the moment Piggy is killed.", a: true, e: "The same rock destroys both Piggy and the conch." },
+        { t: "tf", q: "An airline pilot rescues the boys.", a: false, e: "A naval officer from a warship rescues them." },
+        { t: "tf", q: "The pig’s head on a stick is called the Lord of the Flies.", a: true, e: "The name comes from the flies that swarm around it." },
+        { t: "tf", q: "Piggy’s real name is revealed at the end of the novel.", a: false, e: "The reader never learns Piggy’s real name." },
+        { t: "tf", q: "The smoke that brings the ship comes from the fire Jack set to hunt Ralph.", a: true, e: "This is the novel’s final irony." }
+      ]
+    }
+  ];
+  const MIXED = { id: "mixed", title: "Mixed Challenge", sub: "20 random questions from every set, different each time", tone: "ink", icon: "shuffle", size: 20 };
+  const ALL_SETS = [...SETS, MIXED];
+
+  const Q = new Map();
+  SETS.forEach(set => set.qs.forEach((q, i) => { q.key = set.id + "-" + (i + 1); q.setId = set.id; Q.set(q.key, q); }));
+
+  const TYPE_LABEL = { mc: "Multiple choice", tf: "True or false", open: "Think, then reveal" };
+  const LETTERS = ["A", "B", "C", "D", "E"];
+
+  const ICONS = {
+    flame: '<svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12.6 2.2c.3 2.6 1.6 4.1 3 5.6 1.5 1.6 3.1 3.3 3.1 6.4A6.7 6.7 0 0 1 12 21a6.7 6.7 0 0 1-6.7-6.8c0-2.5 1.1-4.2 2.6-5.6.1 1.6.8 2.8 2 3.4-.3-3.6 1-7.2 2.7-9.8z"/></svg>',
+    people: '<svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="12" cy="7.5" r="3"/><path d="M6.5 19.5c0-3.1 2.5-5.5 5.5-5.5s5.5 2.4 5.5 5.5"/><circle cx="5" cy="9.5" r="2.2"/><path d="M1.8 18c0-2.2 1.4-3.9 3.4-4.3"/><circle cx="19" cy="9.5" r="2.2"/><path d="M22.2 18c0-2.2-1.4-3.9-3.4-4.3"/></svg>',
+    conch: '<svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3.5 20.5 8 16"/><path d="M8 16c-2-4 .5-10 6.5-11.5 3.6-.9 6.6 1.6 6 5-.5 2.7-3.1 4.2-5.4 3.4-1.8-.6-2.5-2.6-1.4-4 .8-1 2.4-1 3 .1"/><path d="M8 16c3.2 1.2 7.5.6 10.2-2"/></svg>',
+    island: '<svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M2 20c2.5-2.6 6-3.8 10-3.8s7.5 1.2 10 3.8"/><path d="M12.5 16.2c.3-3.4-.2-6.6-1.6-9.4"/><path d="M10.9 6.8C9.3 5 6.6 4.6 4.6 5.8"/><path d="M10.9 6.8c1.2-2.1 3.9-3 6.2-2.2"/><path d="M10.9 6.8c2.6-.4 5 1 6 3.4"/><path d="M10.9 6.8c-2.4.1-4.4 1.9-4.8 4.3"/></svg>',
+    shuffle: '<svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 7h3.5c2 0 3.2 1 4.3 2.6l2.4 4.8c1.1 1.6 2.3 2.6 4.3 2.6H21"/><path d="M3 17h3.5c1.5 0 2.5-.6 3.3-1.6"/><path d="M14.2 8.6c.8-1 1.8-1.6 3.3-1.6H21"/><path d="m18 4 3 3-3 3"/><path d="m18 14 3 3-3 3"/></svg>',
+    check: '<svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12.5 4.5 4.5L19 7.5"/></svg>',
+    x: '<svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round"><path d="M6.5 6.5l11 11M17.5 6.5l-11 11"/></svg>',
+    next: '<svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>',
+    flip: '<svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12a8 8 0 0 1 13.7-5.6L20 8.5"/><path d="M20 4v4.5h-4.5"/><path d="M20 12a8 8 0 0 1-13.7 5.6L4 15.5"/><path d="M4 20v-4.5h4.5"/></svg>',
+    retry: '<svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12a8 8 0 1 0 2.4-5.7L4 8.5"/><path d="M4 4v4.5h4.5"/></svg>'
+  };
+
+  /* ---------------- Helpers ---------------- */
+  const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  const $ = (s, r = document) => r.querySelector(s);
+  const $$ = (s, r = document) => Array.from(r.querySelectorAll(s));
+
+  function h(tag, props, ...kids) {
+    const el = document.createElement(tag);
+    if (props) {
+      for (const [k, v] of Object.entries(props)) {
+        if (v == null || v === false) continue;
+        if (k === "class") el.className = v;
+        else if (k === "text") el.textContent = v;
+        else if (k === "html") el.innerHTML = v;
+        else if (k.startsWith("on") && typeof v === "function") el.addEventListener(k.slice(2), v);
+        else el.setAttribute(k, v === true ? "" : String(v));
+      }
+    }
+    for (const kid of kids.flat()) {
+      if (kid == null || kid === false) continue;
+      el.append(kid.nodeType ? kid : document.createTextNode(String(kid)));
+    }
+    return el;
+  }
+
+  function shuffle(arr) {
+    for (let i = arr.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [arr[i], arr[j]] = [arr[j], arr[i]];
+    }
+    return arr;
+  }
+
+  const STORE_KEY = "lotf-quiz-best-v1";
+  function loadBest() {
+    try { return JSON.parse(localStorage.getItem(STORE_KEY) || "{}") || {}; } catch (e) { return {}; }
+  }
+  function saveBest(obj) {
+    try { localStorage.setItem(STORE_KEY, JSON.stringify(obj)); } catch (e) { /* storage unavailable */ }
+  }
+
+  const getSet = id => ALL_SETS.find(s => s.id === id);
+
+  /* ---------------- State ---------------- */
+  const state = {
+    v: 1, view: "home", setId: null, order: [], index: 0,
+    score: 0, streak: 0, bestStreak: 0, answers: [],
+    answered: false, revealed: false, result: null, filter: "all"
+  };
+  const currentQ = () => Q.get(state.order[state.index]);
+  let busy = false;
+
+  /* ---------------- Ember canvas ---------------- */
+  function Embers(canvas) {
+    const ctx = canvas.getContext("2d");
+    let w = 0, hgt = 0, parts = [], raf = 0, running = false, color = "#F97316";
+    const target = () => Math.max(18, Math.min(70, Math.round(w / 7)));
+    function readColor() {
+      const c = getComputedStyle(document.documentElement).getPropertyValue("--ember-glow").trim();
+      if (c) color = c;
+    }
+    function spawn(anywhere) {
+      const max = 160 + Math.random() * 260;
+      return {
+        x: Math.random() * w,
+        y: anywhere ? Math.random() * hgt : hgt + 8,
+        r: .6 + Math.random() * 1.9,
+        vy: .25 + Math.random() * .8,
+        sway: .3 + Math.random() * .7,
+        ph: Math.random() * 6.28,
+        life: anywhere ? Math.random() * max : 0,
+        max
+      };
+    }
+    function resize() {
+      const r = canvas.getBoundingClientRect();
+      const dpr = Math.min(2, window.devicePixelRatio || 1);
+      w = r.width; hgt = r.height;
+      canvas.width = Math.max(1, Math.round(w * dpr));
+      canvas.height = Math.max(1, Math.round(hgt * dpr));
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      const n = target();
+      while (parts.length < n) parts.push(spawn(true));
+      parts.length = n;
+      if (!running) draw(false);
+    }
+    function draw(step) {
+      ctx.clearRect(0, 0, w, hgt);
+      ctx.globalCompositeOperation = "lighter";
+      ctx.fillStyle = color;
+      for (const p of parts) {
+        if (step) {
+          p.life++;
+          p.y -= p.vy;
+          p.x += Math.sin(p.life / 40 + p.ph) * p.sway * .4;
+        }
+        const t = p.life / p.max;
+        const a = Math.max(0, t < .15 ? t / .15 : 1 - (t - .15) / .85) * .9;
+        ctx.globalAlpha = a * .3;
+        ctx.beginPath(); ctx.arc(p.x, p.y, p.r * 3.2, 0, 6.283); ctx.fill();
+        ctx.globalAlpha = a;
+        ctx.beginPath(); ctx.arc(p.x, p.y, p.r, 0, 6.283); ctx.fill();
+        if (step && (p.life >= p.max || p.y < -12)) Object.assign(p, spawn(false));
+      }
+      ctx.globalAlpha = 1;
+      ctx.globalCompositeOperation = "source-over";
+    }
+    function loop() {
+      if (!running) return;
+      draw(true);
+      raf = requestAnimationFrame(loop);
+    }
+    return {
+      start() {
+        readColor();
+        resize();
+        if (reduceMotion || running) return;
+        running = true;
+        raf = requestAnimationFrame(loop);
+      },
+      stop() { running = false; cancelAnimationFrame(raf); },
+      resize,
+      readColor
+    };
+  }
+  const embers = Embers($(".embers"));
+
+  /* ---------------- Effects ---------------- */
+  function burstFrom(el, n) {
+    if (reduceMotion || !el) return;
+    const r = el.getBoundingClientRect();
+    const fx = $("#fx");
+    for (let i = 0; i < n; i++) {
+      const s = document.createElement("span");
+      s.className = "spark" + (i % 4 === 0 ? " alt" : "");
+      s.style.left = (r.left + r.width / 2 + (Math.random() - .5) * r.width * .6) + "px";
+      s.style.top = (r.top + r.height / 2) + "px";
+      fx.appendChild(s);
+      const ang = -Math.PI / 2 + (Math.random() - .5) * Math.PI * 1.4;
+      const dist = 40 + Math.random() * 80;
+      const anim = s.animate(
+        [{ transform: "translate(0, 0) scale(1)", opacity: 1 },
+         { transform: `translate(${Math.cos(ang) * dist}px, ${Math.sin(ang) * dist}px) scale(.3)`, opacity: 0 }],
+        { duration: 650 + Math.random() * 450, easing: "cubic-bezier(.15, .7, .3, 1)" }
+      );
+      anim.onfinish = () => s.remove();
+    }
+  }
+  function shake(el) {
+    if (reduceMotion || !el) return;
+    el.animate(
+      [{ transform: "translateX(0)" }, { transform: "translateX(-7px)" }, { transform: "translateX(6px)" },
+       { transform: "translateX(-4px)" }, { transform: "translateX(2px)" }, { transform: "translateX(0)" }],
+      { duration: 400, easing: "ease-out" }
+    );
+  }
+  function enterAnim(card) {
+    if (reduceMotion) return;
+    card.animate([{ opacity: 0, transform: "translateX(28px)" }, { opacity: 1, transform: "none" }],
+      { duration: 300, easing: "cubic-bezier(.2, .8, .2, 1)" });
+    $$(".opt", card).forEach((o, i) => o.animate(
+      [{ opacity: 0, transform: "translateY(10px)" }, { opacity: 1, transform: "none" }],
+      { duration: 280, delay: 90 + i * 60, easing: "cubic-bezier(.2, .8, .2, 1)", fill: "backwards" }
+    ));
+  }
+  function countUp(el, to, ms) {
+    if (reduceMotion) { el.textContent = String(to); return; }
+    const t0 = performance.now();
+    const step = t => {
+      const k = Math.min(1, (t - t0) / ms);
+      el.textContent = String(Math.round(to * (1 - Math.pow(1 - k, 3))));
+      if (k < 1) requestAnimationFrame(step);
+    };
+    requestAnimationFrame(step);
+  }
+
+  /* ---------------- Views ---------------- */
+  function show(view) {
+    state.view = view;
+    document.body.dataset.view = view;
+    for (const v of ["home", "quiz", "results"]) $("#view-" + v).hidden = v !== view;
+    resetExit();
+    window.scrollTo(0, 0);
+    if (view === "home") { renderHome(); embers.start(); }
+    else embers.stop();
+  }
+
+  function renderHome() {
+    const best = loadBest();
+    $("#stat-questions").textContent = String(Q.size);
+    $("#stat-sets").textContent = String(ALL_SETS.length);
+    $("#set-list").replaceChildren(...ALL_SETS.map((set, i) => {
+      let count, meta;
+      if (set.qs) {
+        count = set.qs.length;
+        const n = t => set.qs.filter(q => q.t === t).length;
+        meta = [["mc", "multiple choice"], ["tf", "true or false"], ["open", "think & reveal"]]
+          .filter(([t]) => n(t) > 0).map(([t, label]) => n(t) + " " + label).join(" · ");
+      } else {
+        count = set.size;
+        meta = "Multiple choice and true or false";
+      }
+      const b = best[set.id];
+      return h("button", { type: "button", class: "set tone-" + set.tone + (set.qs ? "" : " set-mixed"), style: "--i:" + i, onclick: () => startQuiz(set.id) },
+        h("span", { class: "set-icon", html: ICONS[set.icon] }),
+        h("span", { class: "set-body" },
+          h("span", { class: "set-title", text: set.title }),
+          h("span", { class: "set-sub", text: set.sub }),
+          h("span", { class: "set-meta", text: meta })
+        ),
+        h("span", { class: "set-side" },
+          h("span", { class: "set-count", text: String(count) }),
+          h("span", { class: "set-count-label", text: "questions" }),
+          b ? h("span", { class: "best", text: "Best " + b.pct + "%" }) : null
+        )
+      );
+    }));
+  }
+
+  function startQuiz(id) {
+    const set = getSet(id);
+    if (!set) return;
+    const order = set.qs
+      ? set.qs.map(q => q.key)
+      : shuffle([...Q.values()].filter(q => q.t !== "open").map(q => q.key)).slice(0, set.size);
+    Object.assign(state, {
+      setId: id, order, index: 0, score: 0, streak: 0, bestStreak: 0,
+      answers: [], answered: false, revealed: false, result: null, filter: "all"
+    });
+    show("quiz");
+    $("#quiz-title").textContent = set.title;
+    renderQuestion(true);
+  }
+
+  function buildCard(q) {
+    const nodes = [
+      h("div", { class: "qmeta" },
+        h("span", { class: "qtype", text: TYPE_LABEL[q.t] }),
+        h("span", { class: "qnum", text: `Question ${state.index + 1} of ${state.order.length}` })
+      )
+    ];
+    if (state.setId === "mixed") nodes.push(h("p", { class: "qfrom", text: "From: " + getSet(q.setId).title }));
+
+    if (q.t === "open") {
+      const flip = h("button", {
+        type: "button", class: "flip", "aria-label": "Flip the card to see the answer",
+        onclick: () => {
+          if (!state.revealed) reveal();
+          else flip.classList.toggle("is-flipped");
+        }
+      },
+        h("span", { class: "flip-inner" },
+          h("span", { class: "face face-front" },
+            h("span", { class: "face-q", text: q.q }),
+            h("span", { class: "face-hint" }, h("span", { html: ICONS.flip }), "Answer in your head, then tap to flip")
+          ),
+          h("span", { class: "face face-back" },
+            h("span", { class: "face-label", text: "Answer" }),
+            h("span", { class: "face-a", text: q.r }),
+            h("span", { class: "face-small", text: q.q })
+          )
+        )
+      );
+      nodes.push(flip);
+    } else {
+      nodes.push(h("h2", { class: "qtext", id: "qtext", text: q.q }));
+      const opts = q.t === "mc"
+        ? q.o.map((label, i) => ({ label, value: i, key: h("span", { class: "opt-key", text: LETTERS[i] }) }))
+        : [true, false].map(v => ({ label: v ? "True" : "False", value: v, key: h("span", { class: "opt-key", html: v ? ICONS.check : ICONS.x }) }));
+      nodes.push(h("div", { class: "opts" + (q.t === "tf" ? " opts-tf" : ""), role: "group", "aria-labelledby": "qtext" },
+        opts.map(o => h("button", { type: "button", class: "opt", onclick: e => choose(o.value, e.currentTarget) },
+          o.key,
+          h("span", { class: "opt-text", text: o.label })
+        ))
+      ));
+    }
+    nodes.push(h("div", { class: "feedback-slot", id: "feedback-slot", "aria-live": "polite" }));
+    return nodes;
+  }
+
+  async function renderQuestion(first) {
+    const q = currentQ();
+    const card = $("#qcard");
+    if (first || reduceMotion) {
+      card.replaceChildren(...buildCard(q));
+      if (!reduceMotion) enterAnim(card);
+    } else {
+      busy = true;
+      const out = card.animate([{ opacity: 1, transform: "none" }, { opacity: 0, transform: "translateX(-28px)" }],
+        { duration: 170, easing: "ease-in", fill: "forwards" });
+      try { await out.finished; } catch (e) { /* cancelled */ }
+      card.replaceChildren(...buildCard(q));
+      out.cancel();
+      enterAnim(card);
+      busy = false;
+    }
+    updateTop(false);
+    renderActions();
+  }
+
+  function updateTop(animate) {
+    const total = state.order.length;
+    const done = state.index + (state.answered ? 1 : 0);
+    $("#progress-fill").style.width = (total ? done / total * 100 : 0) + "%";
+    const pb = $("#progress");
+    pb.setAttribute("aria-valuemax", String(total));
+    pb.setAttribute("aria-valuenow", String(done));
+    const sn = $("#score-num");
+    if (sn.textContent !== String(state.score)) {
+      sn.textContent = String(state.score);
+      if (animate && !reduceMotion) $("#score-pill").animate(
+        [{ transform: "scale(1)" }, { transform: "scale(1.12)" }, { transform: "scale(1)" }],
+        { duration: 320, easing: "ease-out" });
+    }
+    $("#streak").hidden = state.streak < 2;
+    $("#streak-num").textContent = String(state.streak);
+  }
+
+  function renderActions() {
+    const q = currentQ();
+    const last = state.index === state.order.length - 1;
+    let kids;
+    if (q.t === "open" && !state.answered) {
+      kids = state.revealed
+        ? [
+            h("button", { type: "button", class: "btn btn-secondary", onclick: () => selfCheck(false) }, "Not yet"),
+            h("button", { type: "button", class: "btn btn-good", onclick: () => selfCheck(true) }, h("span", { class: "btn-icon", html: ICONS.check }), "I got it")
+          ]
+        : [h("button", { type: "button", class: "btn btn-primary", onclick: reveal }, h("span", { class: "btn-icon", html: ICONS.flip }), "Show answer")];
+    } else if (state.answered) {
+      kids = [h("button", { type: "button", class: "btn btn-primary", id: "btn-next", onclick: next },
+        last ? "See my score" : "Next question", h("span", { class: "btn-icon", html: ICONS.next }))];
+    } else {
+      kids = [h("button", { type: "button", class: "btn btn-primary", "aria-disabled": "true" },
+        q.t === "tf" ? "Choose True or False" : "Choose an answer")];
+    }
+    $("#actionbar-inner").replaceChildren(...kids);
+  }
+
+  function record(ok, pick) {
+    state.answers[state.index] = { key: state.order[state.index], ok, pick };
+    state.answered = true;
+    if (ok) {
+      state.score++;
+      state.streak++;
+      state.bestStreak = Math.max(state.bestStreak, state.streak);
+    } else {
+      state.streak = 0;
+    }
+    updateTop(true);
+    renderActions();
+    const nb = $("#btn-next");
+    if (nb) {
+      if (!reduceMotion) nb.animate([{ transform: "translateY(8px)", opacity: .3 }, { transform: "none", opacity: 1 }],
+        { duration: 260, easing: "cubic-bezier(.2, .8, .2, 1)" });
+      try { nb.focus({ preventScroll: true }); } catch (e) { /* ignore */ }
+    }
+  }
+
+  function choose(value, btn) {
+    if (state.answered || busy || state.view !== "quiz") return;
+    const q = currentQ();
+    if (q.t === "open") return;
+    const ok = value === q.a;
+    paint(q, value, true);
+    record(ok, value);
+    if (ok) burstFrom(btn, 16); else shake(btn);
+  }
+
+  function paint(q, pick, animate) {
+    $$("#qcard .opt").forEach((b, i) => {
+      const val = q.t === "mc" ? i : i === 0;
+      b.setAttribute("aria-disabled", "true");
+      b.tabIndex = -1;
+      const key = $(".opt-key", b);
+      if (val === q.a) {
+        b.classList.add("is-correct");
+        if (q.t === "mc") key.innerHTML = ICONS.check;
+      } else if (val === pick) {
+        b.classList.add("is-wrong");
+        if (q.t === "mc") key.innerHTML = ICONS.x;
+      } else {
+        b.classList.add("is-dim");
+      }
+    });
+    const ok = pick === q.a;
+    const right = q.t === "mc" ? `${LETTERS[q.a]}. ${q.o[q.a]}` : (q.a ? "True" : "False");
+    showFeedback(h("div", { class: "feedback " + (ok ? "good" : "bad") },
+      h("p", { class: "feedback-title" }, h("span", { class: "fb-icon", html: ok ? ICONS.check : ICONS.x }), ok ? "Correct" : "Not quite"),
+      ok ? null : h("p", null, "The answer is ", h("strong", { text: right })),
+      q.e ? h("p", { text: q.e }) : null
+    ), animate);
+  }
+
+  function showFeedback(fb, animate) {
+    $("#feedback-slot").replaceChildren(fb);
+    if (!animate) return;
+    if (!reduceMotion) fb.animate([{ opacity: 0, transform: "translateY(-6px)" }, { opacity: 1, transform: "none" }],
+      { duration: 260, easing: "cubic-bezier(.2, .8, .2, 1)" });
+    requestAnimationFrame(() => {
+      try { fb.scrollIntoView({ block: "nearest", behavior: reduceMotion ? "auto" : "smooth" }); } catch (e) { /* ignore */ }
+    });
+  }
+
+  function reveal() {
+    if (state.revealed || state.view !== "quiz") return;
+    state.revealed = true;
+    const flip = $("#qcard .flip");
+    if (flip) {
+      flip.classList.add("is-flipped");
+      flip.setAttribute("aria-label", "Flip the card to see the question again");
+    }
+    renderActions();
+  }
+
+  function paintOpen(knew, animate) {
+    showFeedback(h("div", { class: "feedback " + (knew ? "good" : "neutral") },
+      h("p", { class: "feedback-title" }, h("span", { class: "fb-icon", html: knew ? ICONS.check : ICONS.retry }), knew ? "Counted as correct" : "Saved for review"),
+      h("p", { text: knew ? "Keep this answer in mind for your test." : "You will see it again in your answers list at the end." })
+    ), animate);
+  }
+
+  function selfCheck(knew) {
+    if (state.answered || state.view !== "quiz") return;
+    paintOpen(knew, true);
+    record(knew, knew);
+    if (knew) burstFrom($("#qcard .flip"), 14);
+  }
+
+  function next() {
+    if (busy || !state.answered || state.view !== "quiz") return;
+    if (state.index >= state.order.length - 1) { finish(); return; }
+    state.index++;
+    state.answered = false;
+    state.revealed = false;
+    window.scrollTo({ top: 0, behavior: reduceMotion ? "auto" : "smooth" });
+    renderQuestion(false);
+  }
+
+  function message(p) {
+    if (p === 100) return "Perfect score. Every answer was correct.";
+    if (p >= 85) return "Excellent. You know this part of the novel well.";
+    if (p >= 65) return "Good work. Look over the questions you missed.";
+    if (p >= 40) return "A fair start. Read the explanations, then try again.";
+    return "Keep going. Review the answers below and try once more.";
+  }
+
+  function finish() {
+    const total = state.order.length;
+    const pct = Math.round(state.score / total * 100);
+    const best = loadBest();
+    const prev = best[state.setId];
+    const newBest = !prev || pct > prev.pct;
+    if (newBest) { best[state.setId] = { pct, score: state.score, total }; saveBest(best); }
+    state.result = { pct, newBest, prevPct: prev ? prev.pct : null };
+    state.filter = "all";
+    show("results");
+    renderResults(true);
+  }
+
+  function renderResults(animate) {
+    const set = getSet(state.setId);
+    const total = state.order.length;
+    const { pct, newBest, prevPct } = state.result;
+    $("#res-set").textContent = set.title;
+    $("#res-score").textContent = `${state.score} of ${total} correct`;
+    $("#res-msg").textContent = message(pct);
+
+    const chips = [];
+    if (newBest && prevPct != null) chips.push(h("span", { class: "tag tag-best" }, h("span", { html: ICONS.check }), `New best (was ${prevPct}%)`));
+    else if (!newBest) chips.push(h("span", { class: "tag" }, `Your best: ${prevPct}%`));
+    if (state.bestStreak >= 3) chips.push(h("span", { class: "tag tag-streak" }, h("span", { html: ICONS.flame }), `${state.bestStreak} in a row`));
+    $("#res-chips").replaceChildren(...chips);
+
+    const C = 2 * Math.PI * 52;
+    const fill = $("#ring-fill");
+    fill.style.strokeDasharray = C.toFixed(2);
+    const target = (C * (1 - pct / 100)).toFixed(2);
+    if (animate && !reduceMotion) {
+      fill.style.transition = "none";
+      fill.style.strokeDashoffset = C.toFixed(2);
+      fill.getBoundingClientRect();
+      fill.style.transition = "";
+      requestAnimationFrame(() => requestAnimationFrame(() => { fill.style.strokeDashoffset = target; }));
+      countUp($("#ring-num"), pct, 1300);
+      if (pct >= 70) {
+        setTimeout(() => burstFrom($(".ring-wrap"), 22), 900);
+        setTimeout(() => burstFrom($(".ring-wrap"), 16), 1250);
+      }
+    } else {
+      fill.style.strokeDashoffset = target;
+      $("#ring-num").textContent = String(pct);
+    }
+
+    const missed = state.answers.filter(a => a && !a.ok).length;
+    $("#chip-all").textContent = `All ${total}`;
+    $("#chip-missed").textContent = `Missed ${missed}`;
+    renderReview();
+  }
+
+  function renderReview() {
+    $("#chip-all").setAttribute("aria-pressed", String(state.filter === "all"));
+    $("#chip-missed").setAttribute("aria-pressed", String(state.filter === "missed"));
+    const items = state.order
+      .map((key, i) => ({ q: Q.get(key), a: state.answers[i], n: i + 1 }))
+      .filter(x => state.filter === "all" || !(x.a && x.a.ok));
+    const list = $("#review-list");
+    if (!items.length) {
+      list.replaceChildren(h("p", { class: "empty", text: "Nothing missed. Every answer was correct." }));
+      return;
+    }
+    list.replaceChildren(...items.map(({ q, a, n }) => {
+      const ok = !!(a && a.ok);
+      let body;
+      if (q.t === "open") {
+        body = h("div", { class: "rv-body" },
+          h("p", { class: "rv-line" }, h("span", { class: "rv-label", text: "You said" }),
+            h("span", { class: "rv-val" + (ok ? "" : " wrong"), text: a ? (a.pick ? "I got it" : "Not yet") : "Not answered" })),
+          h("p", { class: "rv-line" }, h("span", { class: "rv-label", text: "Answer" }), h("span", { class: "rv-val", text: q.r }))
+        );
+      } else {
+        const fmt = v => q.t === "mc" ? `${LETTERS[v]}. ${q.o[v]}` : (v ? "True" : "False");
+        body = h("div", { class: "rv-body" },
+          h("p", { class: "rv-line" }, h("span", { class: "rv-label", text: "Your answer" }),
+            h("span", { class: "rv-val " + (ok ? "right" : "wrong"), text: a ? fmt(a.pick) : "Not answered" })),
+          ok ? null : h("p", { class: "rv-line" }, h("span", { class: "rv-label", text: "Correct" }), h("span", { class: "rv-val right", text: fmt(q.a) })),
+          q.e ? h("p", { class: "rv-why", text: q.e }) : null
+        );
+      }
+      return h("article", { class: "rv " + (ok ? "ok" : "miss") },
+        h("div", { class: "rv-head" },
+          h("span", { class: "rv-mark", html: ok ? ICONS.check : ICONS.x }),
+          h("p", { class: "rv-q" }, h("span", { class: "rv-n", text: n + ". " }), q.q)
+        ),
+        body
+      );
+    }));
+  }
+
+  /* ---------------- Exit (tap twice to leave) ---------------- */
+  let exitTimer = 0;
+  let exitArmed = false;
+  function resetExit() {
+    exitArmed = false;
+    clearTimeout(exitTimer);
+    $("#btn-exit").classList.remove("armed");
+    $("#exit-label").textContent = "Exit";
+  }
+  $("#btn-exit").addEventListener("click", () => {
+    const started = state.answers.some(Boolean);
+    if (started && !exitArmed) {
+      exitArmed = true;
+      $("#btn-exit").classList.add("armed");
+      $("#exit-label").textContent = "Leave quiz?";
+      clearTimeout(exitTimer);
+      exitTimer = setTimeout(resetExit, 3000);
+      return;
+    }
+    show("home");
+  });
+
+  $("#btn-home").addEventListener("click", () => show("home"));
+  $("#btn-again").addEventListener("click", () => startQuiz(state.setId));
+  $("#chip-all").addEventListener("click", () => { state.filter = "all"; renderReview(); });
+  $("#chip-missed").addEventListener("click", () => { state.filter = "missed"; renderReview(); });
+
+  /* ---------------- Keyboard ---------------- */
+  document.addEventListener("keydown", e => {
+    if (state.view !== "quiz" || e.metaKey || e.ctrlKey || e.altKey) return;
+    const q = currentQ();
+    const k = e.key.toLowerCase();
+    if (!state.answered) {
+      if (q.t === "mc") {
+        let i = "1234".indexOf(k);
+        if (i < 0) i = "abcd".indexOf(k);
+        if (k.length === 1 && i >= 0 && i < q.o.length) { e.preventDefault(); choose(i, $$("#qcard .opt")[i]); }
+      } else if (q.t === "tf" && (k === "t" || k === "f")) {
+        e.preventDefault();
+        choose(k === "t", $$("#qcard .opt")[k === "t" ? 0 : 1]);
+      }
+    } else if (k === "arrowright" || (k === "enter" && !(document.activeElement && document.activeElement.tagName === "BUTTON"))) {
+      e.preventDefault();
+      next();
+    }
+  });
+
+  /* ---------------- Lifecycle ---------------- */
+  let rz = 0;
+  window.addEventListener("resize", () => {
+    cancelAnimationFrame(rz);
+    rz = requestAnimationFrame(() => { if (state.view === "home") embers.resize(); });
+  });
+  document.addEventListener("visibilitychange", () => {
+    if (document.hidden) embers.stop();
+    else if (state.view === "home") embers.start();
+  });
+  try {
+    window.matchMedia("(prefers-color-scheme: dark)").addEventListener("change", () => embers.readColor());
+    new MutationObserver(() => embers.readColor()).observe(document.documentElement, { attributes: true, attributeFilter: ["data-theme"] });
+  } catch (e) { /* older browsers */ }
+
+  function restore(data) {
+    const s = data && data.state;
+    if (!s || s.v !== 1 || !Array.isArray(s.order) || !getSet(s.setId) || !s.order.length || !s.order.every(k => Q.has(k))) return false;
+    if (s.view !== "quiz" && !(s.view === "results" && s.result)) return false;
+    Object.assign(state, s);
+    if (state.view === "quiz") {
+      show("quiz");
+      $("#quiz-title").textContent = getSet(state.setId).title;
+      renderQuestion(true);
+      if (state.answered) {
+        const q = currentQ();
+        const a = state.answers[state.index];
+        if (q.t === "open") {
+          $("#qcard .flip")?.classList.add("is-flipped");
+          paintOpen(!!(a && a.ok), false);
+        } else if (a) {
+          paint(q, a.pick, false);
+        }
+      } else if (state.revealed) {
+        $("#qcard .flip")?.classList.add("is-flipped");
+      }
+      renderActions();
+    } else {
+      show("results");
+      renderResults(false);
+    }
+    return true;
+  }
+
+  function start(data) {
+    let ok = false;
+    try { ok = restore(data || {}); } catch (e) { ok = false; }
+    if (!ok) show("home");
+  }
+
+  /* ---------------- Visitor counter (Google Apps Script) ---------------- */
+  function makeId() {
+    try { if (window.crypto && crypto.randomUUID) return crypto.randomUUID(); } catch (e) { /* fall back */ }
+    return "v" + Date.now().toString(36) + Math.random().toString(36).slice(2, 10);
+  }
+  function visitorId() {
+    const KEY = "lotf-visitor-id";
+    try {
+      let id = localStorage.getItem(KEY);
+      if (!id) { id = makeId(); localStorage.setItem(KEY, id); }
+      return id;
+    } catch (e) {
+      return makeId();
+    }
+  }
+  function registerVisit() {
+    try {
+      if (window.google && google.script && google.script.run) {
+        google.script.run
+          .withFailureHandler(function () { /* counting is best effort */ })
+          .registerVisit(visitorId());
+      }
+    } catch (e) { /* not running on Google Apps Script */ }
+  }
+
+  start({});
+  registerVisit();
+})();
+</script>
+</body>
+</html>
